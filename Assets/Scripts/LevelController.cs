@@ -62,9 +62,9 @@ public class LevelController : MonoBehaviour
             }
             StartCoroutine(TimeCooldown(2.0f));
         }
-        if (staticMove && staticField.transform.position.x < -13)
+        if (staticMove && staticField.transform.position.x < -Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x - 3.0f)
         {
-            staticField.transform.position = new Vector2(staticField.transform.position.x + 0.1f, staticField.transform.position.y);
+            staticField.transform.position = Vector3.MoveTowards(staticField.transform.position, new Vector3(-Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x - 3.0f, staticField.transform.position.y, 0.0f), 0.1f);
         }
         else
         {
@@ -95,7 +95,7 @@ public class LevelController : MonoBehaviour
         canvas.SetActive(true);
         text.GetComponent<Text>().text = "Where am I?";
         yield return new WaitForSeconds(2.0f);
-        text.GetComponent<Text>().text = "Looks like I've been watching too much tv....";
+        text.GetComponent<Text>().text = "Looks like I've been watching too much TV....";
         yield return new WaitForSeconds(3.0f);
         staticMove = true;
         yield return new WaitForSeconds(1.0f);
