@@ -41,7 +41,7 @@ public class VolumeUp : MonoBehaviour
     }
     void TurnVolumeDown()
     {
-        if (AudioListener.volume != 0.0f)
+        if (AudioListener.volume >= 0.0f)
         {
             AudioListener.volume -= 0.1f;
         }

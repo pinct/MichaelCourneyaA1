@@ -62,6 +62,9 @@ public class Trigger1 : MonoBehaviour
 
     IEnumerator FirstTrigger()
     {
+        level.GetComponent<LevelController>().canForward = false;
+        level.GetComponent<LevelController>().canRewind = false;
+        level.GetComponent<LevelController>().canPause = false;
         inRoutine = true;
         playerVelocity = player.GetComponent<Rigidbody2D>().velocity;
         player.GetComponent<Rigidbody2D>().velocity = new UnityEngine.Vector3(0, 0, 0);
@@ -82,6 +85,9 @@ public class Trigger1 : MonoBehaviour
 
     IEnumerator SecondTrigger()
     {
+        level.GetComponent<LevelController>().canForward = false;
+        level.GetComponent<LevelController>().canRewind = false;
+        level.GetComponent<LevelController>().canPause = false;
         inRoutine = true;
         playerVelocity = player.GetComponent<Rigidbody2D>().velocity;
         player.GetComponent<Rigidbody2D>().velocity = new UnityEngine.Vector3(0, 0, 0);
@@ -102,6 +108,9 @@ public class Trigger1 : MonoBehaviour
 
     IEnumerator ThirdTrigger()
     {
+        level.GetComponent<LevelController>().canForward = false;
+        level.GetComponent<LevelController>().canRewind = false;
+        level.GetComponent<LevelController>().canPause = false;
         inRoutine = true;
         playerVelocity = player.GetComponent<Rigidbody2D>().velocity;
         player.GetComponent<Rigidbody2D>().velocity = new UnityEngine.Vector3(0, 0, 0);
