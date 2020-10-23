@@ -23,7 +23,10 @@ public class VolumeUp : MonoBehaviour
     }
     void TurnVolumeUp()
     {
-        AudioListener.volume += 0.1f;
+        if (AudioListener.volume != 1.0f)
+        {
+            AudioListener.volume += 0.1f;
+        }
     }
     void MuteVolume()
     {
@@ -38,6 +41,9 @@ public class VolumeUp : MonoBehaviour
     }
     void TurnVolumeDown()
     {
-        AudioListener.volume -= 0.1f;
+        if (AudioListener.volume != 0.0f)
+        {
+            AudioListener.volume -= 0.1f;
+        }
     }
 }

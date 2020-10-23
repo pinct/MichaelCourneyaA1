@@ -70,6 +70,10 @@ public class LevelController : MonoBehaviour
         {
             staticMove = false;
         }
+        if (player.GetComponent<Rigidbody2D>().gravityScale == 0.0f)
+        {
+            player.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
