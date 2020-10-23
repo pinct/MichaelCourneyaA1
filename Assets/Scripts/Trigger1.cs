@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Trigger1 : MonoBehaviour
 {
@@ -10,19 +11,50 @@ public class Trigger1 : MonoBehaviour
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject text;
     [SerializeField] private GameObject level;
-    public int eventNum = 1;
+    private GameObject[] events;
+    public int eventNum = 0;
     public bool inRoutine = false;
     public UnityEngine.Vector3 playerVelocity = UnityEngine.Vector3.zero;
+    private bool alreadyTriggered;
     // Start is called before the first frame update
     void Start()
     {
-        
+        eventNum = GameObject.Find("EventNumerator").GetComponent<EventNumerator>().eventNum;
+        if(eventNum == 0)
+        {
+            StartCoroutine(IntroSequence());
+            alreadyTriggered = false;
+        }
+        else if (eventNum == 1)
+        {
+            player.GetComponent<Animator>().SetBool("Run_01", true);
+            canvas.SetActive(false);
+            level.GetComponent<LevelController>().gameState = LevelController.State.Normal;
+        }
+        else if (eventNum == 2)
+        {
+            alreadyTriggered = true;
+            level.GetComponent<LevelController>().canRewind = true;
+            player.GetComponent<Animator>().SetBool("Run_01", true);
+            canvas.SetActive(false);
+            level.GetComponent<LevelController>().gameState = LevelController.State.Normal;
+        }
+        else if (eventNum == 3)
+        {
+            GetComponents<BoxCollider2D>()[0].enabled = false;
+            level.GetComponent<LevelController>().canRewind = true;
+            level.GetComponent<LevelController>().canForward = true;
+            player.GetComponent<Animator>().SetBool("Run_01", true);
+            canvas.SetActive(false);
+            level.GetComponent<LevelController>().gameState = LevelController.State.Normal;
+        }
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        eventNum = GameObject.Find("EventNumerator").GetComponent<EventNumerator>().eventNum;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +62,10 @@ public class Trigger1 : MonoBehaviour
         if(collision.gameObject.tag == "Player" && eventNum == 1)
         {
             StartCoroutine(FirstTrigger());
+        }
+        else if (collision.gameObject.tag == "Player" && eventNum == 2 && alreadyTriggered)
+        {
+            alreadyTriggered = false;
         }
         else if (collision.gameObject.tag == "Player" && eventNum == 2)
         {
@@ -45,11 +81,11 @@ public class Trigger1 : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && eventNum == 1)
         {
-            eventNum = 2;
+            GameObject.Find("EventNumerator").GetComponent<EventNumerator>().eventNum = 2;
         }
         else if (collision.gameObject.tag == "Player" && eventNum == 2)
         {
-            eventNum = 3;
+            GameObject.Find("EventNumerator").GetComponent<EventNumerator>().eventNum = 3;
             playerVelocity = UnityEngine.Vector3.zero;
         }
         else if (collision.gameObject.tag == "Player" && eventNum == 3)
@@ -59,6 +95,25 @@ public class Trigger1 : MonoBehaviour
         }
     }
 
+    IEnumerator IntroSequence()
+    {
+        level.GetComponent<LevelController>().gameState = LevelController.State.Pause;
+        canvas.SetActive(false);
+        yield return new WaitForSeconds(1.0f);
+        canvas.SetActive(true);
+        text.GetComponent<Text>().text = "Where am I?";
+        yield return new WaitForSeconds(2.0f);
+        text.GetComponent<Text>().text = "Looks like I've been watching too much TV....";
+        yield return new WaitForSeconds(3.0f);
+        level.GetComponent<LevelController>().staticMove = true;
+        yield return new WaitForSeconds(1.0f);
+        text.GetComponent<Text>().text = "AHHHH!!! I don't want to find out what that does!";
+        yield return new WaitForSeconds(2.0f);
+        player.GetComponent<Animator>().SetBool("Run_01", true);
+        canvas.SetActive(false);
+        level.GetComponent<LevelController>().gameState = LevelController.State.Normal;
+        GameObject.Find("EventNumerator").GetComponent<EventNumerator>().eventNum = 1;
+    }
 
     IEnumerator FirstTrigger()
     {
@@ -103,6 +158,7 @@ public class Trigger1 : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         text.GetComponent<Text>().text = "Press '→' to fast forward.";
         level.GetComponent<LevelController>().canForward = true;
+        GetComponents<BoxCollider2D>()[0].enabled = false;
         inRoutine = false;
     }
 

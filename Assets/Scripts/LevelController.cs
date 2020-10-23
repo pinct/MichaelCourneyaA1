@@ -16,12 +16,12 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameObject staticField;
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject text;
-    [SerializeField] private bool staticMove = false;
+    [SerializeField] public bool staticMove = false;
     public enum State { Reverse, Pause, Forward, Normal };
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(IntroSequence());
+
     }
 
     // Update is called once per frame
@@ -89,25 +89,6 @@ public class LevelController : MonoBehaviour
         GameObject.Find("Transition").GetComponent<Animator>().SetBool("SceneChanging", true);
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene(1);
-    }
-
-    IEnumerator IntroSequence()
-    {
-        gameState = State.Pause;
-        canvas.SetActive(false);
-        yield return new WaitForSeconds(1.0f);
-        canvas.SetActive(true);
-        text.GetComponent<Text>().text = "Where am I?";
-        yield return new WaitForSeconds(2.0f);
-        text.GetComponent<Text>().text = "Looks like I've been watching too much TV....";
-        yield return new WaitForSeconds(3.0f);
-        staticMove = true;
-        yield return new WaitForSeconds(1.0f);
-        text.GetComponent<Text>().text = "AHHHH!!! I don't want to find out what that does!";
-        yield return new WaitForSeconds(2.0f);
-        player.GetComponent<Animator>().SetBool("Run_01", true);
-        canvas.SetActive(false);
-        gameState = State.Normal;
     }
 
     IEnumerator TimeCooldown(float time)

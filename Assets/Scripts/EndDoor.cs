@@ -27,6 +27,7 @@ public class EndDoor : MonoBehaviour
     IEnumerator MainScreen()
     {
         Destroy(GameObject.FindGameObjectWithTag("Music"));
+        Destroy(GameObject.Find("EventNumerator"));
         GameObject.Find("Transition").GetComponent<Animator>().SetBool("SceneChanging", true);
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene(0);
