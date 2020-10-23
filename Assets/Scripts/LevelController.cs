@@ -128,16 +128,16 @@ public class LevelController : MonoBehaviour
         }
         player.GetComponent<Animator>().enabled = true;
         yield return new WaitForSeconds(1.5f);
-        if(GameObject.Find("Event1") != null && GameObject.Find("Event1").GetComponent<Trigger1>().eventNum == 1)
+        if(GameObject.Find("Event1") != null && GameObject.Find("Event1").GetComponent<Trigger1>().eventNum == 1 && !GameObject.Find("Event1").GetComponent<Trigger1>().inRoutine)
         {
             canRewind = true;
         }
-        else if (GameObject.Find("Event1") != null && GameObject.Find("Event1").GetComponent<Trigger1>().eventNum == 2)
+        else if (GameObject.Find("Event1") != null && GameObject.Find("Event1").GetComponent<Trigger1>().eventNum == 2 && !GameObject.Find("Event1").GetComponent<Trigger1>().inRoutine)
         {
             canRewind = true;
             canForward = true;
         }
-        else if (GameObject.Find("Event1") == null || GameObject.Find("Event1").GetComponent<Trigger1>().eventNum == 3)
+        else if (GameObject.Find("Event1") == null || GameObject.Find("Event1").GetComponent<Trigger1>().eventNum == 3 && !GameObject.Find("Event1").GetComponent<Trigger1>().inRoutine)
         {
             canRewind = true;
             canPause = true;

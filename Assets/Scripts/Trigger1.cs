@@ -113,6 +113,8 @@ public class Trigger1 : MonoBehaviour
         yield return new WaitForSeconds(2.5f); 
         text.GetComponent<Text>().text = "Hope you haven't run out of buttons yet.";
         yield return new WaitForSeconds(2.5f);
+        text.GetComponent<Text>().text = "Maybe we can wait until the fire is out.";
+        yield return new WaitForSeconds(2.5f);
         text.GetComponent<Text>().text = "Press '↓' to pause.";
         level.GetComponent<LevelController>().canPause = true;
         inRoutine = false;
